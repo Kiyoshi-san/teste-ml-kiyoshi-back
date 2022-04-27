@@ -12,7 +12,7 @@ export const searchProducts = async (req, res) => {
       res.send(product.data);
     }
   } catch (error) {
-    res.status(404).send({ message: error });
+    res.status(500).send({ message: error });
   }
 };
 
