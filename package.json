@@ -1,0 +1,29 @@
+{
+  "name": "teste-ml-kiyoshi-back",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kiyoshi-san/teste-ml-kiyoshi-back.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kiyoshi-san/teste-ml-kiyoshi-back/issues"
+  },
+  "homepage": "https://github.com/Kiyoshi-san/teste-ml-kiyoshi-back#readme",
+  "dependencies": {
+    "axios": "^0.27.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
