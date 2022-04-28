@@ -1,11 +1,13 @@
 import axios from 'axios';
 
+const ENDPOINT_URL = process.env.ENDPOINT_URL || "https://api.mercadolibre.com";
+
 export const searchProducts = async (req, res) => {
   const { query } = req;
 
   try {
     const product = await axios.get(
-      `https://api.mercadolibre.com/sites/MLA/search?q=${query.q}`
+      `${ENDPOINT_URL}/sites/MLA/search?q=${query.q}`
     );
 
     if (product) {
@@ -21,11 +23,11 @@ export const getProductById = async(req, res) => {
 
   try {
     const product = await axios.get(
-      `https://api.mercadolibre.com/items/${params.id}`
+      `${ENDPOINT_URL}/items/${params.id}`
     );
 
     const details = await axios.get(
-      `https://api.mercadolibre.com/items/${params.id}/description`
+      `${ENDPOINT_URL}/items/${params.id}/description`
     );
 
     if(product) {
