@@ -23,7 +23,7 @@ app.listen(PORT, () =>
 // ROUTES
 // #######################################
 app.get("/", (req, res) => {
-  res.send("Homepage");
+  res.send("initial page API");
 });
 app.use("/api/items", productRoute);
 
