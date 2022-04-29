@@ -33,7 +33,7 @@ export const searchProducts = async (req, res) => {
             price: handlePrice(prd.prices.prices),
             thumbnail: prd.thumbnail,
             condition: prd.condition,
-            free_shipping: prd.shipping.free_shipping
+            free_shipping: prd?.shipping?.free_shipping
           })
       } else {
         return;
@@ -105,8 +105,31 @@ export const getProductById = async(req, res) => {
       `${ENDPOINT_URL}/items/${params.id}/description`
     );
 
-    if(product) {
-      res.send({ product: product.data, details: details.data });
+    const handleResponse = (product, details) => {
+      return {
+        author: {
+          name: "Kiyoshi",
+          lastname: "Yodogawa"
+        },
+        item: {
+          id: product.id,
+          title: product.title,
+          price: {
+            currency: product.currency_id,
+            amount: product.price,
+            decimals: product?.price?.toString()?.match(/(?<=\.)\d+/)?.join()
+          },
+          picture: product.pictures[0].url,
+          condition: product.condition,
+          free_shipping: product?.shipping?.free_shipping,
+          sold_quantity: product.sold_quantity,
+          description: details.plain_text
+        }
+      }
+    }
+
+    if (product && details) {
+      res.send(handleResponse(product.data, details.data));
     }
   } catch(error) {
     res.status(500).send({ message: error })
