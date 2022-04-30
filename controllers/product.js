@@ -13,7 +13,13 @@ export const searchProducts = async (req, res) => {
   // Handle product Search Response
   const handlePrice = (prices) => {
     const pricesAux = prices
-      .filter((prc) => prc.type === "standard")
+      .filter((prc) => {
+        if(prc.type === "promotion") {
+          return prc.type === "promotion";
+        } else if (prc.type === "standard") {
+          return prc.type === "standard";
+        }
+      })
       .map((val) => ({
         currency: val.currency_id,
         amount: val?.amount,
