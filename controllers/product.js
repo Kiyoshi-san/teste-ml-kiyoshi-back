@@ -65,7 +65,7 @@ export const searchProducts = async (req, res) => {
   };
   // End - Handle product Search Response
 
-  // Handle Suggetion
+  // Handle Suggestion
   const handleSearchSuggestionsList = (prodData) => {
     let prodDataAux = [];
     for (let i = 0; i <= 9; i++) {
@@ -82,7 +82,7 @@ export const searchProducts = async (req, res) => {
 
     return prodDataAux;
   };
-  // End - Handle Suggetion
+  // End - Handle Suggestion
 
   try {
     const product = await axios.get(
