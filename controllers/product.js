@@ -122,7 +122,7 @@ export const getProductById = async(req, res) => {
           lastname: "Yodogawa",
         },
         categories: handleCategories(product),
-        item: {
+        items: {
           id: product.id,
           title: product.title,
           price: {
