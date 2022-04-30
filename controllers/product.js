@@ -2,25 +2,29 @@ import axios from 'axios';
 
 const ENDPOINT_URL = process.env.ENDPOINT_URL || "https://api.mercadolibre.com";
 
+const handleCategories = (prodData) => {
+  return prodData?.filters?.filter((prdRes) => prdRes.id === "category")[0]
+  ?.values[0].path_from_root.map(val => val.name);
+};
+
 export const searchProducts = async (req, res) => {
   const { query } = req;
 
   // Handle product Search Response
-  const handleCategories = (prodData) => {
-    return prodData.filters.filter((prdRes) => prdRes.id === "category")[0]
-      .values[0].path_from_root.map(val => val.name);
-  };
-
   const handlePrice = (prices) => {
     const pricesAux = prices
       .filter((prc) => prc.type === "standard")
       .map((val) => ({
         currency: val.currency_id,
         amount: val?.amount,
-        decimals: val?.amount?.toString()?.match(/(?<=\.)\d+/)?.join() || '00',
+        decimals:
+          val?.amount
+            ?.toString()
+            ?.match(/(?<=\.)\d+/)
+            ?.join() || "00",
       }));
-    return pricesAux[0]
-  }
+    return pricesAux[0];
+  };
 
   const handleProductList = (prodData) => {
     let prodDataAux = [];
@@ -33,8 +37,8 @@ export const searchProducts = async (req, res) => {
             price: handlePrice(prd.prices.prices),
             thumbnail: prd.thumbnail,
             condition: prd.condition,
-            free_shipping: prd?.shipping?.free_shipping
-          })
+            free_shipping: prd?.shipping?.free_shipping,
+          });
       } else {
         return;
       }
@@ -82,7 +86,7 @@ export const searchProducts = async (req, res) => {
     if (product) {
       if (query.q) {
         res.send({
-          data: handleSearchResponseData(product.data)
+          data: handleSearchResponseData(product.data),
         });
       } else if (query.s) {
         res.send(handleSearchSuggestionsList(product.data));
@@ -109,23 +113,27 @@ export const getProductById = async(req, res) => {
       return {
         author: {
           name: "Kiyoshi",
-          lastname: "Yodogawa"
+          lastname: "Yodogawa",
         },
+        categories: handleCategories(product),
         item: {
           id: product.id,
           title: product.title,
           price: {
             currency: product.currency_id,
             amount: product.price,
-            decimals: product?.price?.toString()?.match(/(?<=\.)\d+/)?.join()
+            decimals: product?.price
+              ?.toString()
+              ?.match(/(?<=\.)\d+/)
+              ?.join(),
           },
           picture: product.pictures[0].url,
           condition: product.condition,
           free_shipping: product?.shipping?.free_shipping,
           sold_quantity: product.sold_quantity,
-          description: details.plain_text
-        }
-      }
+          description: details.plain_text,
+        },
+      };
     }
 
     if (product && details) {
