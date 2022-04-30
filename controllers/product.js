@@ -131,7 +131,7 @@ export const getProductById = async(req, res) => {
             decimals: product?.price
               ?.toString()
               ?.match(/(?<=\.)\d+/)
-              ?.join(),
+              ?.join() || "00",
           },
           picture: product.pictures[0].url,
           condition: product.condition,
